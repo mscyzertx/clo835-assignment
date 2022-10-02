@@ -48,8 +48,13 @@ jobs:
           ls -ltra
           # Docker build
           docker build -t $ECR_REGISTRY/$ECR_REPO_PREFIX-app:$IMAGE_TAG .
-          
+          # Unit test
+          docker run -d -p 8080:8080 --name my_app $ECR_REGISTRY/$ECR_REPO_PREFIX-app:$IMAGE_TAG
+          docker ps
+          echo "Pause for 10 seconds to let container start"
+          sleep 10
           docker push $ECR_REGISTRY/$ECR_REPO_PREFIX-app:$IMAGE_TAG
+          
       - name: MySQL DB build, test, tag, and push image to Amazon ECR
         env:
          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -58,5 +63,9 @@ jobs:
           ls -ltra
           # Docker build
           docker build -f Dockerfile_mysql -t $ECR_REGISTRY/$ECR_REPO_PREFIX-db:$IMAGE_TAG .
-         
+          # Unit test
+          docker run -d -e MYSQL_ROOT_PASSWORD=1234 --name my_db $ECR_REGISTRY/$ECR_REPO_PREFIX-db:$IMAGE_TAG
+          docker ps
+          echo "Pause for 10 seconds to let container start"
+          sleep 10
           docker push $ECR_REGISTRY/$ECR_REPO_PREFIX-db:$IMAGE_TAG
