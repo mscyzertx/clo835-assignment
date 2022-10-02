@@ -64,7 +64,7 @@ jobs:
           # Docker build
           docker build -f Dockerfile_mysql -t $ECR_REGISTRY/$ECR_REPO_PREFIX-db:$IMAGE_TAG .
           # Unit test
-          docker run -d -e MYSQL_ROOT_PASSWORD=1234 --name my_db $ECR_REGISTRY/$ECR_REPO_PREFIX-db:$IMAGE_TAG
+          docker run -d -e MYSQL_ROOT_PASSWORD=db123 --name my_db $ECR_REGISTRY/$ECR_REPO_PREFIX-db:$IMAGE_TAG
           docker ps
           echo "Pause for 10 seconds to let container start"
           sleep 10
