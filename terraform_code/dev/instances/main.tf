@@ -79,13 +79,14 @@ resource "aws_security_group" "my_sg" {
   description = "Allow SSH inbound traffic"
   vpc_id      = data.aws_vpc.default.id
 
-  ingress {
-    description      = "SSH from everywhere"
-    from_port        = 22
-    to_port          = 22
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
+dynamic "ingress" {
+    for_each = var.sg_ports
+    content {
+      from_port   = ingress.value
+      to_port     = ingress.value
+      cidr_blocks = ["0.0.0.0/0"]
+      protocol    = "tcp"
+    }
   }
 
   egress {
