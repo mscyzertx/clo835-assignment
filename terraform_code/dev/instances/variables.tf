@@ -23,6 +23,13 @@ variable "env" {
   description = "Deployment Environment"
 }
 
+variable "sg_ports" {
+  default     = ["22","80","8081","8082", "8083"]
+  type        = list(string)
+  description = "Ports open on host"
+}
+
+
 
 
 
