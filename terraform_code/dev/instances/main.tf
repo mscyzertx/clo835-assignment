@@ -53,6 +53,7 @@ resource "aws_instance" "my_amazon" {
   vpc_security_group_ids             = [aws_security_group.my_sg.id]
   associate_public_ip_address = false
   iam_instance_profile        = data.aws_iam_instance_profile.lab_profile.name
+  user_data  			= file("install.sh")
 
   lifecycle {
     create_before_destroy = true
