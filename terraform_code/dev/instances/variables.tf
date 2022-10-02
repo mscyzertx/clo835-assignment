@@ -10,6 +10,12 @@ variable "instance_type" {
   type        = map(string)
 }
 
+variable "ecr_repo" {
+  default     = ["app", "db"]
+  type        = set(string)
+  description = "Amazon ECR Repository Names"
+}
+
 # Variable to signal the current environment 
 variable "env" {
   default     = "dev"
