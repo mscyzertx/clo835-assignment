@@ -41,7 +41,7 @@ jobs:
           ECR_REPOSITORY: assignment2-webapp
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -f Dockerfile -t $ECR_REGISTRY/app_ecr:v0.1 .
+          docker build -f Dockerfile -t $ECR_REGISTRY/assignment2-webapp:v0.1 .
           docker push $ECR_REGISTRY/assignment2-webapp:v0.1
         
       - name: App build, test, tag, and push image to Amazon ECR
@@ -50,7 +50,7 @@ jobs:
           ECR_REPOSITORY: assignment2-webapp
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -f Dockerfile -t $ECR_REGISTRY/app_ecr:v0.2 .
+          docker build -f Dockerfile -t $ECR_REGISTRY/assignment2-webapp:v0.2 .
           docker push $ECR_REGISTRY/assignment2-webapp:v0.2
         
       - name: MYSQL build, test, tag, and push image to Amazon ECR
