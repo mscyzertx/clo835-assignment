@@ -18,13 +18,7 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
- 
-  # Env to use the repositories     
-    env:
-     ECR_REPO_PREFIX: assignment2
-     IMAGE_TAG1: v1.0
-     IMAGE_TAG2: v2.0
-       
+
      
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -43,25 +37,36 @@ jobs:
       # Runs a set of commands using the runners shell   
       - name: App build, test, tag, and push image to Amazon ECR
         env:
-         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: assignment2-webapp
+          IMAGE_TAG: ${{ github.sha }}
         run: |
-          cd clo835_fall2022_assignment1/  
-          ls -ltra
-          # Docker build
-          docker build -t $ECR_REGISTRY/$ECR_REPO_PREFIX-webapp:$IMAGE_TAG1 .
-          docker build -t $ECR_REGISTRY/$ECR_REPO_PREFIX-webapp:$IMAGE_TAG2 .
-          
-          docker push $ECR_REGISTRY/$ECR_REPO_PREFIX-webapp:$IMAGE_TAG1
-          docker push $ECR_REGISTRY/$ECR_REPO_PREFIX-webapp:$IMAGE_TAG2
-      - name: MySQL DB build, test, tag, and push image to Amazon ECR
+          docker build -f Dockerfile -t $ECR_REGISTRY/app_ecr:v0.1 .
+          docker push $ECR_REGISTRY/assignment2-webapp:v0.1
+        
+      - name: App build, test, tag, and push image to Amazon ECR
         env:
-         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: assignment2-webapp
+          IMAGE_TAG: ${{ github.sha }}
         run: |
-          cd clo835_fall2022_assignment1/  
-          ls -ltra
-          # Docker build
-          docker build -f Dockerfile_mysql -t $ECR_REGISTRY/$ECR_REPO_PREFIX-mysql:$IMAGE_TAG1 .
-          docker build -f Dockerfile_mysql -t $ECR_REGISTRY/$ECR_REPO_PREFIX-mysql:$IMAGE_TAG2 .
-         
-          docker push $ECR_REGISTRY/$ECR_REPO_PREFIX-mysql:$IMAGE_TAG1
-          docker push $ECR_REGISTRY/$ECR_REPO_PREFIX-mysql:$IMAGE_TAG2
+          docker build -f Dockerfile -t $ECR_REGISTRY/app_ecr:v0.2 .
+          docker push $ECR_REGISTRY/assignment2-webapp:v0.2
+        
+      - name: MYSQL build, test, tag, and push image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: assignment2-mysql
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -f Dockerfile_mysql -t $ECR_REGISTRY/assignment2-mysql:v0.1 .
+          docker push $ECR_REGISTRY/assignment2-mysql:v0.1
+          
+      - name: MYSQL build, test, tag, and push image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: assignment2-mysql
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -f Dockerfile_mysql -t $ECR_REGISTRY/assignment2-mysql:v0.2 .
+          docker push $ECR_REGISTRY/assignment2-mysql:v0.2
