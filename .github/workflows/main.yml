@@ -44,17 +44,7 @@ jobs:
           cd clo835_fall2022_assignment1/
           docker build -f Dockerfile -t $ECR_REGISTRY/assignment2-webapp:v0.1 .
           docker push $ECR_REGISTRY/assignment2-webapp:v0.1
-        
-      - name: App build, test, tag, and push image to Amazon ECR
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: assignment2-webapp
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          cd clo835_fall2022_assignment1/
-          docker build -f Dockerfile -t $ECR_REGISTRY/assignment2-webapp:v0.2 .
-          docker push $ECR_REGISTRY/assignment2-webapp:v0.2
-        
+          
       - name: MYSQL build, test, tag, and push image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -64,13 +54,3 @@ jobs:
           cd clo835_fall2022_assignment1/
           docker build -f Dockerfile_mysql -t $ECR_REGISTRY/assignment2-mysql:v0.1 .
           docker push $ECR_REGISTRY/assignment2-mysql:v0.1
-          
-      - name: MYSQL build, test, tag, and push image to Amazon ECR
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: assignment2-mysql
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          cd clo835_fall2022_assignment1/
-          docker build -f Dockerfile_mysql -t $ECR_REGISTRY/assignment2-mysql:v0.2 .
-          docker push $ECR_REGISTRY/assignment2-mysql:v0.2
