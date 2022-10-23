@@ -50,11 +50,7 @@ jobs:
           # Docker build
           docker build -t $ECR_REGISTRY/$ECR_REPO_PREFIX-webapp:$IMAGE_TAG1 .
           docker build -t $ECR_REGISTRY/$ECR_REPO_PREFIX-webapp:$IMAGE_TAG2 .
-          # Unit test
-          docker run -d -p 8080:8080 --name my_app $ECR_REGISTRY/$ECR_REPO_PREFIX-webapp:$IMAGE_TAG
-          docker ps
-          echo "Pause for 10 seconds to let container start"
-          sleep 10
+          
           docker push $ECR_REGISTRY/$ECR_REPO_PREFIX-webapp:$IMAGE_TAG1
           docker push $ECR_REGISTRY/$ECR_REPO_PREFIX-webapp:$IMAGE_TAG2
       - name: MySQL DB build, test, tag, and push image to Amazon ECR
@@ -66,10 +62,6 @@ jobs:
           # Docker build
           docker build -f Dockerfile_mysql -t $ECR_REGISTRY/$ECR_REPO_PREFIX-mysql:$IMAGE_TAG1 .
           docker build -f Dockerfile_mysql -t $ECR_REGISTRY/$ECR_REPO_PREFIX-mysql:$IMAGE_TAG2 .
-          # Unit test
-          docker run -d -e MYSQL_ROOT_PASSWORD=db123 --name my_db $ECR_REGISTRY/$ECR_REPO_PREFIX-mysql:$IMAGE_TAG
-          docker ps
-          echo "Pause for 10 seconds to let container start"
-          sleep 10
+         
           docker push $ECR_REGISTRY/$ECR_REPO_PREFIX-mysql:$IMAGE_TAG1
           docker push $ECR_REGISTRY/$ECR_REPO_PREFIX-mysql:$IMAGE_TAG2
