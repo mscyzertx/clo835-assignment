@@ -41,6 +41,7 @@ jobs:
           ECR_REPOSITORY: assignment2-webapp
           IMAGE_TAG: ${{ github.sha }}
         run: |
+          cd clo835_fall2022_assignment1/
           docker build -f Dockerfile -t $ECR_REGISTRY/assignment2-webapp:v0.1 .
           docker push $ECR_REGISTRY/assignment2-webapp:v0.1
         
@@ -50,6 +51,7 @@ jobs:
           ECR_REPOSITORY: assignment2-webapp
           IMAGE_TAG: ${{ github.sha }}
         run: |
+          cd clo835_fall2022_assignment1/
           docker build -f Dockerfile -t $ECR_REGISTRY/assignment2-webapp:v0.2 .
           docker push $ECR_REGISTRY/assignment2-webapp:v0.2
         
@@ -59,6 +61,7 @@ jobs:
           ECR_REPOSITORY: assignment2-mysql
           IMAGE_TAG: ${{ github.sha }}
         run: |
+          cd clo835_fall2022_assignment1/
           docker build -f Dockerfile_mysql -t $ECR_REGISTRY/assignment2-mysql:v0.1 .
           docker push $ECR_REGISTRY/assignment2-mysql:v0.1
           
@@ -68,5 +71,6 @@ jobs:
           ECR_REPOSITORY: assignment2-mysql
           IMAGE_TAG: ${{ github.sha }}
         run: |
+          cd clo835_fall2022_assignment1/
           docker build -f Dockerfile_mysql -t $ECR_REGISTRY/assignment2-mysql:v0.2 .
           docker push $ECR_REGISTRY/assignment2-mysql:v0.2
